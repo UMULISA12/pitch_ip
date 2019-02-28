@@ -86,14 +86,23 @@ def new_pitch():
     
         new_pitch = Pitch(pitch=pitch, title=title, category=category, user_id=current_user.id)
 
-new_review.save_review()
+       
+        new_pitch.save_pitch()
 
-        return redirect(url_for('.movie',id = movie.id ))
+        return redirect(url_for('.index', pitch = pitch))
+
         
         db.session.add(new_pitch)
         db.session.commit()
 
     return render_template('new_pitch.html', pitch_form=form)
+    
+
+    main.route('/pitches')
+    def display_pitch():
+        all_pitches = Pitch.get_pitches()
+        print(all_pitches)
+        return render_template("pitches.html", all_pitches = all_pitches)
 
 
 
