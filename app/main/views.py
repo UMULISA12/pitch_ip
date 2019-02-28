@@ -3,10 +3,10 @@ from . import main
 # from ..request import get_movies,get_movie,search_movie
 # from .forms import ReviewForm
 # from ..models import Review
-from flask_login import login_required
+from flask_login import login_required, current_user
 from flask import render_template,request,redirect,url_for,abort
-from ..models import Pitch, User
-from .forms import ReviewForm,UpdateProfile
+from ..models import Pitch, User, Comment
+from .forms import PitchForm,UpdateProfile
 # from .. import db
 from .. import db,photos
 
@@ -49,17 +49,17 @@ def index():
 #     '''
 #     return render_template('movie.html',id = movie_id)
 
-@main.route('/movie/<int:id>')
-def movie(id):
+# @main.route('/movie/<int:id>')
+# def movie(id):
 
-    '''
-    View movie page function that returns the movie details page and its data
-    '''
-    movie = get_movie(id)
-    title = f'{movie.title}'
-    pitches = Pitch.get_pitches(movie.id)
+#     '''
+#     View movie page function that returns the movie details page and its data
+#     '''
+#     movie = get_movie(id)
+#     title = f'{movie.title}'
+#     pitches = Pitch.get_pitches(movie.id)
 
-    return render_template('movie.html',title = title,movie = movie,pitches = pitches)
+#     return render_template('movie.html',title = title,movie = movie,pitches = pitches)
 
 # @main.route('/search/<movie_name>')
 # def search(movie_name):
@@ -73,25 +73,25 @@ def movie(id):
 #     return render_template('search.html',movies = searched_movies)
 
     
-# @main.route('/movie/review/new/<int:id>', methods = ['GET','POST'])
-# @login_required
-# def new_review(id):
+@main.route('/new', methods=['GET', 'POST'])
+@login_required
 
-#     form = ReviewForm()
+def new_pitch():
+    form = PitchForm()
+    if form.validate_on_submit():
 
-#     movie = get_movie(id)
+        pitch = form.pitch.data
+        title = form.title.data
+        category = form.category.data
+    
+        new_pitch = Pitch(pitch=pitch, title=title, category=category, user_id=current_user.id)
 
-#     if form.validate_on_submit():
-#         title = form.title.data
-#         review = form.review.data
+        db.session.add(new_pitch)
+        db.session.commit()
 
-#         new_review = Review(movie.id,title,movie.poster,review)
-#         new_review.save_review()
+    return render_template('new_pitch.html', pitch_form=form)
 
-#         return redirect(url_for('.movie',id = movie.id ))
 
-#     title = f'{movie.title} review'
-#     return render_template('new_review.html',title = title, review_form=form, movie=movie)
 
 
 @main.route('/user/<uname>')

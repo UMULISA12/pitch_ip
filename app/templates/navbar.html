@@ -25,7 +25,7 @@
 
         </div>
     </div> -->
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/index.css') }}">
     <div class="navbar navbar-inverse" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -36,12 +36,12 @@
                   <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="/"> <img src="https://cdn.pixabay.com/photo/2017/02/18/19/20/logo-2078018__340.png" width="80" height="80"> </a>
-                <a class="navbar-brand" href="/"> Pitch App </a>
+                <p><a class="navbar-brand" href="/"> Pitch App </a></p>
             </div>
             
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="/"></a></li>
+                    <p><li><a href="/">Home</a></li></ul></p>
             </div>
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated %}
