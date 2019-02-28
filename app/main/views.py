@@ -129,7 +129,7 @@ def display_pitch():
 @main.route('/comment/<int:id>', methods = ['GET','POST'])
 @login_required
 def comment(id):
-    comment = Comment.query.filter_by(pitch_id=id)
+    # comment = Comment.query.filter_by(pitch_id=id)
 
     form_comment = CommentForm()
     if form_comment.validate_on_submit():
@@ -140,7 +140,7 @@ def comment(id):
         db.session.add(comment)
         db.session.commit()
 
-    return render_template("comment.html",form_comment=form_comment, comment=comment)
+    return render_template("comment.html",form_comment=form_comment)
 
 
 
