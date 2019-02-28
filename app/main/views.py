@@ -86,6 +86,10 @@ def new_pitch():
     
         new_pitch = Pitch(pitch=pitch, title=title, category=category, user_id=current_user.id)
 
+new_review.save_review()
+
+        return redirect(url_for('.movie',id = movie.id ))
+        
         db.session.add(new_pitch)
         db.session.commit()
 
