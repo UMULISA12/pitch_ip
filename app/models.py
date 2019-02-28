@@ -252,6 +252,7 @@ class Pitch(db.Model):
     __tablename__='pitches'
     id = db.Column(db.Integer,primary_key = True)
     title = db.Column(db.String(200))
+    author = db.Column(db.String(200))
     category = db.Column(db.String(200))
     pitch = db.Column(db.String(1000))
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
