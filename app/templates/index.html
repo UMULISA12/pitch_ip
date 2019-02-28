@@ -12,4 +12,12 @@
  </div>
 </div>
 
+{% for pitch in all_pitches%}
+
+<h5 class="card-title">{{pitch.title}}</h5>
+<p class="card-text">{{pitch.category}}</p>
+<p class="card-text">{{pitch.pitch}}</p>
+
+
+{% endfor %}
 {% endblock%}

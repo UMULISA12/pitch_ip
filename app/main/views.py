@@ -20,7 +20,8 @@ def index():
     '''
 
     message = 'Hello World'
-    return render_template('index.html',message = message)
+    all_pitches = Pitch.get_pitches()
+    return render_template('index.html',message = message, all_pitches = all_pitches)
 # @main.route('/')
 # def index():
 
@@ -96,13 +97,31 @@ def new_pitch():
         db.session.commit()
 
     return render_template('new_pitch.html', pitch_form=form)
-    
 
-    main.route('/pitches')
-    def display_pitch():
+
+main.route('/pitches')
+def display_pitch():
         all_pitches = Pitch.get_pitches()
         print(all_pitches)
-        return render_template("pitches.html", all_pitches = all_pitches)
+        return render_template("new_pitch.html", all_pitches = all_pitches)
+
+
+@main.route('/comment/<int:id>', methods=['GET', 'POST'])
+@login_required
+def comment(id):
+   comment_form = CommentForm()
+
+   pitch = Pitch.query.get(id)
+
+   if comment_form.validate_on_submit():
+       comment = comment_form.comment.data
+       
+       new_comment = Comment(comment=comment,user_id=user_id)
+       new_comment.save_comment()
+
+       return redirect(url_for('main.index'))
+
+   return render_template('comment.html',comment_form=comment_form,pitch=pitch)
 
 
 

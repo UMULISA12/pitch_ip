@@ -262,8 +262,8 @@ class Pitch(db.Model):
         db.session.commit()
 
     @classmethod
-    def get_pitches(cls,id):
-        pitches = Pitch.query.order_by(Pitch.posted.desc())
+    def get_pitches(id):
+        pitches = Pitch.query.all()
         return pitches
 
 
