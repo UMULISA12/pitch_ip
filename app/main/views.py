@@ -99,7 +99,7 @@ def new_pitch():
     return render_template('new_pitch.html', pitch_form=form)
 
 
-main.route('/pitches')
+@main.route('/pitches')
 def display_pitch():
         all_pitches = Pitch.get_pitches()
         print(all_pitches)

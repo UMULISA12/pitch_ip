@@ -3,6 +3,7 @@
 <!-- Styles block -->
 
 {% block content %}
+<div class="container">
 <div class="container-fluid mt-3">
  <p>Do you want to write a pitch. Sign up <a href="auth/register">here</a></p>
 
@@ -12,12 +13,15 @@
  </div>
 </div>
 
+<h1>Perfect pitches</h1>
+
 {% for pitch in all_pitches%}
 
-<h5 class="card-title">{{pitch.title}}</h5>
-<p class="card-text">{{pitch.category}}</p>
-<p class="card-text">{{pitch.pitch}}</p>
+<p class="card-title">Title: {{pitch.title}}</p>
+<p class="card-text">Category: {{pitch.category}}</p>
+<p class="card-text">Pitch: {{pitch.pitch}}</p>
+<br>
 
-
+</div>
 {% endfor %}
 {% endblock%}
