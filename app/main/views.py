@@ -6,7 +6,7 @@ from . import main
 from flask_login import login_required, current_user
 from flask import render_template,request,redirect,url_for,abort
 from ..models import Pitch, User, Comment
-from .forms import PitchForm,UpdateProfile
+from .forms import PitchForm,UpdateProfile,CommentForm
 # from .. import db
 from .. import db,photos
 
@@ -107,25 +107,40 @@ def display_pitch():
         return render_template("new_pitch.html", all_pitches = all_pitches)
 
 
-@main.route('/comment/new/', methods=['GET', 'POST'])
+# @main.route('/comment/new/', methods=['GET', 'POST'])
+# @login_required
+# def comment(id):
+#    comment_form = CommentForm()
+
+#    pitch = Pitch.query.get(id)
+
+#    if comment_form.validate_on_submit():
+
+#        comment = comment_form.comment.data
+
+       
+#        comment = Comment(comment=comment,user_id=user_id)
+#        comment.save_comment()
+
+#        return redirect(url_for('main.index'))
+
+#    return render_template('comment.html',comment_form=comment_form,pitch=pitch)
+
+@main.route('/comment/<int:id>', methods = ['GET','POST'])
 @login_required
 def comment(id):
-   comment_form = CommentForm()
+    comment = Comment.query.filter_by(pitch_id=id)
 
-   pitch = Pitch.query.get(id)
+    form_comment = CommentForm()
+    if form_comment.validate_on_submit():
+        comment = form_comment.comment.data
 
-   if comment_form.validate_on_submit():
+        comment = Comment(comment= comment,pitch_id=id,user=current_user)
+       # save comment
+        db.session.add(comment)
+        db.session.commit()
 
-       comment = comment_form.comment.data
-       
-       
-       new_comment = Comment(comment=comment,user_id=user_id)
-       new_comment.save_comment()
-
-       return redirect(url_for('main.index'))
-
-   return render_template('comment.html',comment_form=comment_form,pitch=pitch)
-
+    return render_template("comment.html",form_comment=form_comment, comment=comment)
 
 
 

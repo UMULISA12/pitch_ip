@@ -268,15 +268,32 @@ class Pitch(db.Model):
         return pitches
 
 
-class Comment(db.Model):
+# class Comment(db.Model):
 
-    __tablename__='comments'
-    id = db.Column(db.Integer,primary_key = True)
-    comment = db.Column(db.String(240))
-    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
-    pitch_id=db.Column(db.Integer,db.ForeignKey("pitches.id"))
+#     __tablename__='comments'
+#     id = db.Column(db.Integer,primary_key = True)
+#     comment = db.Column(db.String(240))
+#     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+#     pitch_id=db.Column(db.Integer,db.ForeignKey("pitches.id"))
 
     
+
+#     def save_comment(self):
+#         db.session.add(self)
+#         db.session.commit()
+
+#     @classmethod
+#     def get_comments(cls,id):
+#             comments = Comment.query.filter_by(pitch_id=id).all()
+#             return comments
+class Comment(db.Model):
+    __tablename__='comments'
+
+    id = db.Column(db.Integer,primary_key=True)
+    comment_content = db.Column(db.String())
+    pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
+    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+    posted = db.Column(db.DateTime,default=datetime.utcnow)
 
     def save_comment(self):
         db.session.add(self)
@@ -284,5 +301,10 @@ class Comment(db.Model):
 
     @classmethod
     def get_comments(cls,id):
-            comments = Comment.query.filter_by(pitch_id=id).all()
-            return comments
+        comments = Comment.query.filter_by(pitch_id=id).all()
+        return comments
+
+    @classmethod
+    def get_all_comments(cls,id):
+        comments = Comment.query.order_by('-id').all()
+        return comment
