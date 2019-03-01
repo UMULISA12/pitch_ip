@@ -267,6 +267,20 @@ class Pitch(db.Model):
         pitches = Pitch.query.all()
         return pitches
 
+    @classmethod
+    def upvote(cls,id):
+       pitch=Pitch.query.filter_by(pitch_id=id).all()
+       upvotes=0
+       upvotes=pitch.upvotes+1
+       return upvotes
+
+    @classmethod
+    def downvote(cls,id):
+       pitch=Pitch.query.filter_by(pitch_id=id).all()
+       downvotes=0
+       downvotes=pitch.downvotes+1
+       return downvotes
+
 
 # class Comment(db.Model):
 
