@@ -320,5 +320,5 @@ class Comment(db.Model):
 
     @classmethod
     def get_all_comments(cls,id):
-        comments = Comment.query.order_by('-id').all()
+        comments = Comment.query.order_by('id').all()
         return comment

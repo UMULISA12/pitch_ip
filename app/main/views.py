@@ -136,7 +136,8 @@ def add_comment(id):
   form=CommentForm()
   if form.validate_on_submit():
      comment=form.comment.data
-     new_comment=Comment(content=comment ,pitch=pitch ,user=current_user)
+     
+     new_comment=Comment(content=comment,user_id=current_user.id)
      db.session.add(new_comment)  
     #  db.session.commit() 
 
