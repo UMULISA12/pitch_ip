@@ -1,4 +1,4 @@
-## project name: pitch_ip
+## PROJECT NAME: PITCH_IP
 
 ## AUTHOR
 Alice UMULISA
