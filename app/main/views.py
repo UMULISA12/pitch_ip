@@ -129,14 +129,14 @@ def display_pitch():
 @main.route('/comment/<int:id>', methods = ['GET','POST'])
 @login_required
 def comment(id):
-    # comment = Comment.query.filter_by(pitch_id=id)
+    comment = Comment.query.filter_by(pitch_id=id)
 
     form_comment = CommentForm()
     if form_comment.validate_on_submit():
         comment = form_comment.comment.data
 
         comment = Comment(comment= comment,pitch_id=id,user=current_user)
-       # save comment
+    #    save comment
         db.session.add(comment)
         db.session.commit()
 
