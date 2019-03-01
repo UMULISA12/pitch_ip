@@ -126,21 +126,35 @@ def display_pitch():
 
 #    return render_template('comment.html',comment_form=comment_form,pitch=pitch)
 
-@main.route('/comment/<int:id>', methods = ['GET','POST'])
+@main.route('/new/comment/<int:id>', methods = ['GET','POST'])
 @login_required
-def comment(id):
-    comment = Comment.query.filter_by(pitch_id=id)
+def add_comment(id):
+ comment=Comment.save_comment(id=id).first()
+ if pitch is None:
+    abort(404)
 
-    form_comment = CommentForm()
-    if form_comment.validate_on_submit():
-        comment = form_comment.comment.data
+ form=CommentForm()
+  
+ if form.validate_on_submit():
+     comment=form.comment.data
+     new_comment=Comment(content=comment ,pitch=pitch ,user=current_user)
+     db.session.add(new_comment)  
+    #  db.session.commit() 
 
-        comment = Comment(comment= comment,pitch_id=id,user=current_user)
-    #    save comment
-        db.session.add(comment)
-        db.session.commit()
+     return redirect(url_for('main.index'))
+     return render_template('comment.html', comment_form=form ,pitch=pitch)
 
-    return render_template("comment.html",form_comment=form_comment)
+@main.route('/pitch/<int:id>')
+def single_pitch(id):
+    pitch=Pitch.query.filter_by(id=id).first()
+    comments=Comment.get_comments(id=id)
+    return render_template('pitch.html',pitch=pitch,comments=comments)
+
+@main.route('/downvotes/<int:id>')
+def upvoting(id):
+    pitch1=Pitch.query.filter_by(id=id).first()
+    pitch1.upvotes=Pitch.upvote(id)
+    return redirect(url_for('main.single_pitch',pitch=pitch1.upvotes))
 
 
 

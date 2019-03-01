@@ -21,7 +21,7 @@
 <p class="card-text">Category: {{pitch.category}}</p>
 <p class="card-text">Pitch: {{pitch.pitch}}</p>
 <p class="card-text">Author: {{pitch.author}}</p>
-<a class="btn btn-light btn-xl sr-button" href="{{url_for('main.comment',id = pitch.id)}}"> Comment</a>
+<p><a class="btn btn-light btn-xl sr-button" href="{{url_for('main.add_comment',id = pitch.id)}}"> Comment</a></p>
 <br>
 
 </div>

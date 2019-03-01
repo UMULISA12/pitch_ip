@@ -290,7 +290,7 @@ class Comment(db.Model):
     __tablename__='comments'
 
     id = db.Column(db.Integer,primary_key=True)
-    comment_content = db.Column(db.String())
+    content = db.Column(db.String())
     pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
     posted = db.Column(db.DateTime,default=datetime.utcnow)
