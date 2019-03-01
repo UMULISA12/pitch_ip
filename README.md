@@ -36,3 +36,8 @@ You need to clone the repository and install all the dependencies required befor
 * CSS
 * Bootstrap
 
+## LICENSE
+* MIT License
+
+
+
