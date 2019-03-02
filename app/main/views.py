@@ -126,23 +126,39 @@ def display_pitch():
 
 #    return render_template('comment.html',comment_form=comment_form,pitch=pitch)
 
-@main.route('/new/comment/<int:id>', methods = ['GET','POST'])
-@login_required
-def add_comment(id):
-  pitch=Pitch.query.filter_by(id=id).first()
-  if pitch is None:
-    abort(404)
+# @main.route('/new/comment/<int:id>', methods = ['GET','POST'])
+# @login_required
+# def add_comment(id):
+#   pitch=Pitch.query.filter_by(id=id).first()
+#   if pitch is None:
+#     abort(404)
 
-  form=CommentForm()
-  if form.validate_on_submit():
-     comment=form.comment.data
+#   form=CommentForm()
+#   if form.validate_on_submit():
+#      comment=form.comment.data
      
-     new_comment=Comment(content=comment,user_id=current_user.id)
-     db.session.add(new_comment)  
-    #  db.session.commit() 
+#      new_comment=Comment(content=comment,user_id=current_user.id)
+#      db.session.add(new_comment)  
+#     #  db.session.commit() 
 
-     return redirect(url_for('main.index'))
-  return render_template('comment.html', comment_form=form ,pitch=pitch)
+#      return redirect(url_for('main.index'))
+#   return render_template('comment.html', comment_form=form ,pitch=pitch)
+
+
+@main.route('/comment/new/<int:id>', methods=['GET', 'POST'])
+@login_required
+def comment(id):
+    description_form = CommentForm()
+
+    pitch = Pitch.query.get(id)
+
+    if description_form.validate_on_submit():
+        description = description_form.description.data
+        new_comment = Comment(description=description,user_id=current_user.id,pitch_id = pitch.id )
+        new_comment.save_comments() 
+        return redirect(url_for('main.index'))
+
+    return render_template('comment.html',description_form=description_form)
 
 @main.route('/pitch/<int:id>')
 def single_pitch(id):
