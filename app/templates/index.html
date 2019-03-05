@@ -7,7 +7,7 @@
 <div class="parag1">
 
     
-    <h1>Perfect pitches</h1>
+    <h1 style="text-align:center;">Perfect pitches</h1>
 <div class="container-fluid mt-3">
  
  <p>Please sign up <a href="auth/register">here</a> to add a pitch</p>
@@ -26,16 +26,38 @@
 <div class="container">
     <div class="row">
       <div class="col-sm">
-<p class="card-title">Title: {{pitch.title}}</p>
+<!-- <p class="card-title">Title: {{pitch.title}}</p> -->
+<div class="center">
 <p class="card-text">Category: {{pitch.category}}</p>
 <p class="card-text">Pitch: {{pitch.pitch}}</p>
 <p class="card-text">Author: {{pitch.author}}</p>
 
 {% for comment in pitch.comment %}
 <p>Comment:{{comment.description}}</p>
+</div>
 
-<p><a class="btn btn-light btn-xl sr-button" href="{{url_for('main.comment',id = pitch.id)}}"> Add comment here</a></p> 
+<!-- <p><a class="btn btn-light btn-xl sr-button" href="{{url_for('main.comment',id = pitch.id)}}"> Add comment here</a></p>  -->
 <!-- <p><a href='/comment/new/{{pitch.id}}'>comment</a></p> -->
+
+<div class="row" style="text-align:center;">
+    <a href="{{url_for('main.comment',id = pitch.id)}}" class="btn btn-primary a-btn-slide-text">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            <span><strong>Add comment</strong></span>            
+        </a>
+        <a href="#" class="btn btn-primary a-btn-slide-text">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            <span><strong>View comments</strong></span>            
+        </a>
+        <a href="#" class="btn btn-primary a-btn-slide-text">
+            <span aria-hidden="true"></span>
+            <span><strong>Upvote</strong></span>            
+        </a>
+        <a href="#" class="btn btn-primary a-btn-slide-text">
+           <span  aria-hidden="true"></span>
+            <span><strong>Downvote</strong></span>            
+        </a>
+      </div>
+    
 </div>
 </div>
 </div>
