@@ -48,3 +48,8 @@ a{
 body{
     background-color:darkkhaki;
 }
+
+.container-fluid{
+    text-align: center;
+    /* background-image: url("http://fhba.com/wp-content/uploads/2017/08/2017-Website-Header-Background-5.jpg"); */
+}
